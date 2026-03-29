@@ -53,24 +53,61 @@ docker compose up --build
 
 ## Actividad 4 - Troubleshooting
 
-**Snippet 1:** Faltaban `:` después de `push` y `pull_request`
+**Snippet 1 — Error de sintaxis en triggers:**
 
-**Snippet 2:** `secrets.VERCEL_TOKEN` debe ser `${{ secrets.VERCEL_TOKEN }}`
+Faltaban `:` después de `push` y `pull_request`, y faltaba `:` después de `branches` en el segundo trigger.
 
-**Snippet 3:** `node-version: 18` debe ser `node-version: [18, 20]`
+```yaml
+# CORREGIDO
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main, develop]
+```
+
+**Snippet 2 — Referencia incorrecta a secrets:**
+
+`secrets.VERCEL_TOKEN` no es válido en un campo `env`. Debe usar la sintaxis de expresión `${{ secrets.VERCEL_TOKEN }}`.
+
+```yaml
+# CORREGIDO
+env:
+  VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+```
+
+**Snippet 3 — Matrix y cache inválidos:**
+
+Dos errores: `node-version: 18` debe ser un array, y `cache: npm` requiere comillas.
+
+```yaml
+# CORREGIDO
+strategy:
+  matrix:
+    node-version: [18, 20]
+steps:
+  - uses: actions/setup-node@v4
+    with:
+      node-version: ${{ matrix.node-version }}
+      cache: 'npm'
+```
 
 ---
 
 ## Actividad 5 - Preguntas Conceptuales
 
-**1. CI vs CD:**
-CI automatiza verificación del código en cada push (lint + tests). CD automatiza el despliegue a producción cuando el CI pasa.
+**1. ¿Cuál es la diferencia fundamental entre CI y CD?**
 
-**2. Self-hosted runner:**
-Servidor propio que ejecuta workflows. Se usa cuando se necesita hardware específico o acceso a recursos privados de la empresa.
+La Integración Continua (CI) automatiza la verificación del código cada vez que se hace un push: ejecuta linting, pruebas unitarias y genera reportes de cobertura. Su objetivo es detectar errores lo antes posible. La Entrega Continua (CD) toma el código que ya pasó el CI y automatiza su despliegue a un entorno de producción o staging, garantizando que siempre haya una versión lista para ser entregada.
 
-**3. GitHub Environments:**
-Permiten definir entornos como `production` con secrets propios y reglas de aprobación. Se usan con `environment: production` en el workflow.
+**2. ¿Qué es un GitHub self-hosted runner y cuándo sería necesario usarlo?**
 
-**4. Rollback strategy:**
-Plan para revertir a versión anterior si el deploy falla. Se implementa guardando tags por SHA en Docker Hub y redesplegar la imagen anterior si algo falla.
+Un self-hosted runner es un servidor propio registrado en GitHub para ejecutar los workflows en lugar de usar los runners de GitHub. Se necesita cuando el proyecto requiere hardware específico (GPU, más RAM), acceso a recursos internos de la red corporativa (bases de datos privadas, servidores on-premise), o cuando los costos de los runners de GitHub son elevados por el volumen de ejecuciones.
+
+**3. ¿Cuál es el propósito de los GitHub Environments?**
+
+Los GitHub Environments permiten definir entornos de despliegue (como `production` o `staging`) con sus propios secrets, variables y reglas de protección. Por ejemplo, se puede requerir aprobación manual antes de desplegar a producción. En un workflow se usan con la propiedad `environment: production` en el job, lo que activa las reglas y secrets específicos de ese entorno.
+
+**4. ¿Qué es una rollback strategy y cómo se implementaría?**
+
+Una rollback strategy es el plan para revertir un sistema a una versión anterior estable cuando un despliegue falla o causa problemas en producción. Se implementa en un pipeline de CD etiquetando cada imagen Docker con el SHA del commit (`imagen:${{ github.sha }}`), de modo que si el deploy actual falla, se puede redesplegar la imagen del commit anterior ejecutando `docker pull imagen:SHA_ANTERIOR` sin necesidad de reconstruir nada.
