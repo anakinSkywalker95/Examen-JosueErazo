@@ -41,6 +41,8 @@ docker compose up --build
 
 **Evidencia de deployment exitoso:** [CD - Deploy Production #8 ✅](https://github.com/anakinSkywalker95/Examen-JosueErazo/actions/runs/23699624360)
 
+**Deploy en Render:** https://examen-josueerazo.onrender.com
+
 ---
 
 ## Actividad 4 - Troubleshooting
