@@ -43,6 +43,8 @@ docker compose up --build
 
 **Deploy en Render:** https://examen-josueerazo.onrender.com
 
+![Auto Deploy en Render](https://github.com/user-attachments/assets/a2f1585b-fbd8-4cf9-a048-9a0d07ca7843)
+
 ---
 
 ## Actividad 4 - Troubleshooting
