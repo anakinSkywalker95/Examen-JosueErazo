@@ -30,6 +30,8 @@ docker compose up --build
 
 **Evidencia de run exitoso:** [CI - Lint y Tests #10 ✅](https://github.com/anakinSkywalker95/Examen-JosueErazo/actions/runs/23699611581)
 
+![CI exitoso](https://github.com/user-attachments/assets/3da55d4f-a9a4-4aa0-8a30-0773ca25f85e)
+
 ---
 
 ## Actividad 3 - Pipeline CD
@@ -40,6 +42,8 @@ docker compose up --build
 - Deploy automático a Docker Hub
 
 **Evidencia de deployment exitoso:** [CD - Deploy Production #8 ✅](https://github.com/anakinSkywalker95/Examen-JosueErazo/actions/runs/23699624360)
+
+![CD exitoso](https://github.com/user-attachments/assets/4f0c8c12-363b-478a-b8de-ec552ab046a8)
 
 **Deploy en Render:** https://examen-josueerazo.onrender.com
 
