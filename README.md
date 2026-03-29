@@ -28,14 +28,18 @@ docker compose up --build
 - Matrix: Node.js 18.x y 20.x
 - Caché de npm configurado
 
+**Evidencia de run exitoso:** [CI - Lint y Tests #10 ✅](https://github.com/anakinSkywalker95/Examen-JosueErazo/actions/runs/23699611581)
+
 ---
 
 ## Actividad 3 - Pipeline CD
 
-- Trigger: solo push a main
+- Trigger: solo push a main (via workflow_run después de CI exitoso)
 - Environment: production
 - Secrets: DOCKER_USERNAME y DOCKER_TOKEN
 - Deploy automático a Docker Hub
+
+**Evidencia de deployment exitoso:** [CD - Deploy Production #8 ✅](https://github.com/anakinSkywalker95/Examen-JosueErazo/actions/runs/23699624360)
 
 ---
 
