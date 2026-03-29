@@ -1,0 +1,19 @@
+{
+  "name": "examen-cicd",
+  "version": "1.0.0",
+  "description": "Examen 2 - CI/CD GitHub Actions",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "jest --coverage",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "jest": "^29.0.0",
+    "supertest": "^6.3.0",
+    "eslint": "^8.0.0"
+  }
+}
